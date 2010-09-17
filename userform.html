@@ -1,0 +1,29 @@
+{% if isme == True %}
+<ul class="grid_11">
+    <li>
+    <div class="clear"></div>
+    <div class="single_wrap">
+        <div class="padder">
+
+
+	<form enctype="multipart/form-data" action="/postuser/{{userid}}" method="post">
+  	{{ xsrf_form_html() }}
+
+    About Me: <br>
+    <textarea name='text' rows=6 cols=60>
+        
+        {%if aboutme is not None %} {{aboutme}} {%end%}        
+        
+        </textarea><br>
+                Image <br> (optional)
+    <input type="file" name="image">
+<input type='submit' value='Submit'>
+	</form>
+
+</div>
+</div>
+</li>
+</ul>
+
+    {% end %}
+

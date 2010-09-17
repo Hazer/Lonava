@@ -1,0 +1,58 @@
+Lonava requires:
+	python2.6-dev
+	tornado
+	psycopg2
+	python-setuptools
+
+easy_install ElementTree
+easy_install Markdown
+
+sudo apt-get install python-imaging
+
+nginx from source
+apt-get install build-essential libpcre++-dev libssl-dev
+http://www.grid.net.ru/nginx/download/nginx_upload_module-2.0.12.tar.gz
+
+ ./configure --add-module=/root/Utils/nginx-source/nginx-0.8.46/nginx_upload_module-2.0.12/ --with-http_ssl_module 
+    make
+    make install
+G
+
+
+root@lonava:~/nginx/conf# mkdir /usr/local/lonava/uploads
+root@lonava:~/nginx/conf# mkdir /usr/local/lonava/uploads/1
+root@lonava:~/nginx/conf# mkdir /usr/local/lonava/uploads/2
+root@lonava:~/nginx/conf# mkdir /usr/local/lonava/uploads/3
+root@lonava:~/nginx/conf# mkdir /usr/local/lonava/uploads/4
+root@lonava:~/nginx/conf# mkdir /usr/local/lonava/uploads/5
+root@lonava:~/nginx/conf# mkdir /usr/local/lonava/uploads/6
+root@lonava:~/nginx/conf# mkdir /usr/local/lonava/uploads/7
+root@lonava:~/nginx/conf# mkdir /usr/local/lonava/uploads/8
+root@lonava:~/nginx/conf# mkdir /usr/local/lonava/uploads/9
+root@lonava:~/nginx/conf# mkdir /usr/local/lonava/uploads/0
+chmod 660 above
+
+http://www.feedparser.org/
+apt-get install python-beautifulsoup
+http://intertwingly.net/stories/2004/08/04/urlnorm.py
+
+mkdir /var/log/lonava
+chmod a+w /var/log/lonava
+
+Add Hacker News fetcher to cron
+Add Sitemap maker to cron
+
+http://www.colourlovers.com/palette/30163/polar_ice_caps
+http://www.colourlovers.com/palette/299394/Sky_as_Ice
+
+
+OK, this is an ugly hack.
+locate site.py
+->
+    import sys
+    sys.setdefaultencoding('UTF-8')
+
+root@lonava:/tmp# apt-get install python-httplib2
+pg_stat_statements
+http://it.toolbox.com/blogs/database-soup/pg_stat_statements-in-84-32648
+

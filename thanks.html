@@ -1,0 +1,26 @@
+<ul class="grid_11">
+    <li>
+    <div class="clear"></div>
+    <div class="single_wrap">
+        <div class="padder">
+
+{% if long(uid) != 0 and long(ustatus) > 0 %}
+<p>Your Account is now Verified. You are now able to Post Comments, Create Channels, and Submit Stories. Thank you for taking the time to verify yourself for the community.</p>
+{%end%}
+
+{% if long(uid) < 1 %}
+
+This page is a thank you page for Registered, Verified users. Why not <a href="http://lonava.com/register">register</a> if you want to see it? ;)
+{%end%}
+
+
+{% if long(uid) > 1 and long(ustatus) < 1 %}
+
+This page is a thank you page for Verified users. Why not <a href="https://lonava.com/verify/{{uid}}">Verify your account</a> if you want to see it? ;)
+{%end%}
+
+</div>
+</div>
+</li>
+</ul>
+

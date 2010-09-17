@@ -1,0 +1,9 @@
+Lonava is an online Social News site, like Reddit or Digg.
+I've added the code here- I know that it's not very well written, but I figured someone might be able to use it.
+
+Start Lonava.py on port 80 for testing, and mess around. 
+For production, use the provided init script to run it on 81 82 83 84 and have nginx proxy.
+
+You'll want to create the SQL database as noted in the code.
+Description page - http://e1ven.com/2010/09/17/lonava-2/
+GitHub page - http://github.com/e1ven/Lonava

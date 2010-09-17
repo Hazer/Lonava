@@ -1,0 +1,29 @@
+<ul class="grid_11">
+<li>
+<div class="clear"></div>
+<div class="single_wrap">
+<div class="padder">
+{% if (uid != "0") and (long(ustatus) > 0) %}
+
+	<form enctype="multipart/form-data" action="/postreply/{{storyid}}" method="post">
+  	{{ xsrf_form_html() }}
+
+	<textarea name='text' rows=6 cols=60></textarea><br>
+	<input type='hidden' name='parent' value='{{parent}}'>
+	<input type='hidden' name='test' value='5'>
+	<input type='hidden' name='storyid' value='{{storyid}}'>
+                Image <br> (optional)
+                <input type="file" name="image">
+		<input type='submit' value='Submit'>
+	</form>
+{% end %}
+{% if uid == "0" %}
+<ul><li><br><br><small>Comments can be left by <a href='http://lonava.com/register'>registered and verified users</a>.</small><br><br> </li></ul>
+{% end %}
+{% if (long(ustatus) <  1) and (uid != "0") %}
+<ul><li><br><br><small>Comments can be left by <a href='https://lonava.com/verify/{{uid}}'>verified users</a>.</small><br><br></ul></li>
+{% end %}
+</div>
+</div>
+</li>
+</ul>

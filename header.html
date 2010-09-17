@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta name="verifyownership" content="b7446f8febda6c0d3fa47628a43026aa" />
+<meta NAME="Description" CONTENT="A Social News Site, without the trolls.">
+<meta name="keywords" content="lonava, real name news, social news">
+<link rel="stylesheet" href="/static/style.css" media="screen">
+<meta charset="utf-8">
+
+<!-- Hey, Source Reader!
+
+Welcome to Lonava. I know my coding skills are somewhat sub-par, but if you have any suggestions, I'd love to hear them.
+Email me - support@lonava.com
+Anyway, Enjoy the site, eh?"
+
+-->
+
+
+<title>
+{% if len(title) > 1 %}
+Lonava :: {{title}}
+{% end %}
+{% if len(title) < 2 %}
+Lonava -  The Real Name News
+{% end %}
+</title>
+<link rel="icon" href="/static/lonava-18x18-manual.png">
+
+<script type="text/javascript">
+
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-17094384-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+     ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+     })();
+
+</script>
+
+
+<script type="text/javascript" src="/static/jquery.min.js"></script>
+<script type="text/javascript" src="/static/json2.js"></script>
+<script type="text/javascript" src="/static/jquery.blockUI.js"></script>
+    
+<script type="text/javascript">
+
+$(document).ready(function()
+    {
+    $("a.verified").click(function(event)
+    {
+        {% if (uid == "0") or (long(ustatus) < 1) %}
+            $.blockUI({ message: "You must have a verified account to do that, I'm sorry.",overlayCSS: { backgroundColor: '#4a525a' } });
+            setTimeout($.unblockUI, 2000);
+        {% end %}
+    });
+
+    $("a.registered").click(function(event)
+    {
+        {% if (uid == "0")  %}
+            $.blockUI({ message: "You must be logged in to do that.",overlayCSS: { backgroundColor: '#4a525a' } });
+            setTimeout($.unblockUI, 2000);
+        {% end %}
+    });
+
+
+    $("div.storyvote").click(function(event)
+    {
+        {% if uid == "0" %}
+            $.blockUI({ message: "You must be logged in to vote",overlayCSS: { backgroundColor: '#4a525a' } });
+            setTimeout($.unblockUI, 2000);
+		{% end %}
+
+		{% if uid != "0" %}
+            test = {'storyid':$(this).attr('storyid'),'val':$(this).attr('val')}
+            postme('http://lonava.com/votestory',test,function(response) {}  );
+            storyid = $(this).attr('storyid');
+            var val = " ";
+            val = $(this).attr('val');
+            if (val == "1") {oppval = "-1"}
+            if (val == "-1") {oppval = "1"}
+            origimg = $("div[storyid='" + storyid +"'][val='" + val +"']").find('img')
+            oppimg = $("div[storyid='" + storyid +"'][val='" + oppval +"']").find('img')
+            var orig2 = origimg.attr("src")
+            var opp2 = oppimg.attr("src")
+            if (origimg.attr("src").indexOf("alt") == -1)
+                // If we are pressing the original image for the first time
+                {
+                    orig2 = origimg.attr("src").replace(".png","-alt.png")
+                    var orignum = parseInt($(".score[storyid='" + storyid + "']").html());
+                    var newnum = orignum + parseInt(val);
+                    $(".score[storyid='" + storyid + "']").html(newnum);
+
+                }
+            else   // If we've already voted this button before
+                {
+                 orig2 = origimg.attr("src").replace("-alt.png",".png")
+                 var orignum = parseInt($(".score[storyid='" + storyid + "']").html());
+                 var newnum = orignum - parseInt(val);
+                 $(".score[storyid='" + storyid + "']").html(newnum);
+
+                 test = {'storyid':$(this).attr('storyid'),'val':0}
+                 postme('http://lonava.com/votestory',test,function(response) {}  );
+
+                }
+
+
+            if (oppimg.attr("src").indexOf("alt") > -1)
+                {
+                    opp2 = oppimg.attr("src").replace("-alt.png",".png")
+                    var orignum = parseInt($(".score[storyid='" + storyid + "']").html());
+                    var newnum = orignum + parseInt(val);
+                    $(".score[storyid='" + storyid + "']").html(newnum);
+
+                }
+
+            origimg.attr("src",orig2);
+            oppimg.attr("src",opp2);
+
+         {% end %}
+     });
+
+
+    $("div.replyvote").click(function(event)
+    {
+        test = {'replyid':$(this).attr('replyid'),'val':$(this).attr('val')}
+        {% if uid == "0" %}
+            $.blockUI({ message: "You must be logged in to vote",overlayCSS: { backgroundColor: '#4a525a' } });
+            setTimeout($.unblockUI, 2000);
+        {% end %}
+        {% if uid != "0" %}
+            postme('http://lonava.com/votereply',test,function(response) {}  );
+            replyid = $(this).attr('replyid');
+            var val = " ";
+            val = $(this).attr('val');
+            if (val == "1") {oppval = "-1"}
+            if (val == "-1") {oppval = "1"}
+            origimg = $("div[replyid='" + replyid +"'][val='" + val +"']").find('img')
+            oppimg = $("div[replyid='" + replyid +"'][val='" + oppval +"']").find('img')
+            var orig2 = origimg.attr("src")
+            var opp2 = oppimg.attr("src")
+            if (origimg.attr("src").indexOf("alt") == -1)
+            // If we are pressing the original image for the first time
+            {
+                orig2 = origimg.attr("src").replace(".png","-alt.png")
+                var orignum = parseInt($(".score[replyid='" + replyid + "']").html());
+                var newnum = orignum + parseInt(val);
+                $(".score[replyid='" + replyid + "']").html(newnum);
+            }
+            else   // If we've already voted this button before
+            {
+                orig2 = origimg.attr("src").replace("-alt.png",".png")
+                var orignum = parseInt($(".score[replyid='" + replyid + "']").html());
+                var newnum = orignum - parseInt(val);
+                $(".score[replyid='" + replyid + "']").html(newnum);
+                test = {'replyid':$(this).attr('replyid'),'val':0}
+                postme('http://lonava.com/votereply',test,function(response) {}  );
+            }
+            if (oppimg.attr("src").indexOf("alt") > -1)
+            {
+                opp2 = oppimg.attr("src").replace("-alt.png",".png")
+                var orignum = parseInt($(".score[replyid='" + replyid + "']").html());
+                var newnum = orignum + parseInt(val);
+                $(".score[replyid='" + replyid + "']").html(newnum);
+            }
+
+            origimg.attr("src",orig2);
+            oppimg.attr("src",opp2);
+         {% end %}
+      });
+		  changeArrows();
+    });
+
+function changeArrows()
+{
+    var hidden = readCookie("hidden-post-votes");
+    if (hidden != null)
+    {
+         var hiddenarry = JSON.parse(hidden);
+    }
+    else
+    {
+        var hiddenarry = new Array(0);
+    }
+    for (i in hiddenarry)
+    {
+        tmp = hiddenarry[i].split("||");
+        divtype = tmp[0];
+        tempstoryid = tmp[1];
+        tempval = tmp[2];
+        childimg = $("div[" + divtype + "='" + tempstoryid +"'][val='" + tempval +"']").find('img')
+        var isrc = " ";
+        var src2 = " ";
+        isrc = childimg.attr("src");
+        if (isrc == null) { isrc = " "}
+        if (isrc.indexOf("alt") == -1) { str2 = isrc.replace(".png","-alt.png")}
+        else {str2 = isrc};
+        childimg.attr("src",str2);
+    }
+}
+
+function readCookie(name)
+{
+    var nameEQ = name + "=";
+	var ca = document.cookie.split(';');
+    for(var i=0;i < ca.length;i++)
+    {
+		var c = ca[i];
+		while (c.charAt(0)==' ') c = c.substring(1,c.length);
+		if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	}
+	return null;
+}
+
+
+function getCookie(name)
+{
+    var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+    return r ? r[1] : undefined;
+}
+
+function putCookie(name,value,days) {
+	if (days) {
+		var date = new Date();
+		date.setTime(date.getTime()+(days*24*60*60*1000));
+		var expires = "; expires="+date.toGMTString();
+	}
+	else var expires = "";
+	document.cookie = name+"="+value+expires+"; path=/";
+}
+
+
+function postme(url, args, callback) {
+    args._xsrf = getCookie("_xsrf");
+    $.ajax({url: url, data: $.param(args), dataType: "text", type: "POST",
+        success: function(response) {
+        callback();
+    }});
+};
+</script>
+</head>
+<body >
+<div id="page_wrap">
+
+<div id="header_bg">
+
+
+	<div id="header" class="container_16">
+
+		<div id="logo" class="grid_4">
+            <acronym title="The Lonava Watchums welcome you to the site ;) "><a href="http://Lonava.com"><img src="/static/logo.png" alt="Lonava - Real News" /></a></acronym>
+		</div><!-- #logo -->
+
+
+		<div id="head_right" class="grid_12">
+			<div class="user_info grid_11 alpha">
+				{% if uid != "0" %}
+				<p><strong>
+					{% if long(ustatus) < 1 %}
+				                <acronym title= 'Unverified User'>
+				    {% end %}
+				    {% if long(ustatus) == 1 %}
+				                <acronym title = 'Verified User'>
+				    {%end%}
+				    <a href="http://lonava.com/user/{{uid}}">{{user}}
+					</acronym>
+				    </a>
+                </strong>
+                {% if newmail > 0 %}
+                 <acronym title='{{newmail}} new message{% if newmail > 1%}s{% end %}'><a href="http://lonava.com/mymsg" border=0><img border=0 src="/static/envel.png" width=18 height=13"></a></acronym>
+                {% end %}
+                <br />
+				<a href="http://lonava.com/user/{{uid}}">Preferences</a> | <a href="http://lonava.com/logout">Logout</a>
+				{% end %}
+				{% if uid == "0" %}
+				<p><strong>
+					Unregistered User
+				</strong>
+				<br>
+				<a href="http://lonava.com/register">Register</a> | <a href="http://lonava.com/login">Login</a>
+				{% end %}
+			</div><!-- .user_info -->
+
+			<div class="user_avatar grid_1 omega">
+                {% if uid != "0" %}<a href="http://lonava.com/user/{{uid}}"> {%end%}
+				<img src="/static/usrpics/{{uid}}.png" lt="User Avatar" />
+                {% if uid != "0" %}</a>{%end%}
+			</div><!-- #user_avatar -->
+
+			<div class="clear"></div>
+
+			<hr />
+
+			<div id="head_nav" class="grid_12">
+				<ul>
+					<li><a href="http://lonava.com/stories/10">About</a></li>
+					<li><a href="http://lonava.com/stories/12">Community Guidelines</a></li>
+                    {% if long(ustatus) > 0 %}<li><a href="http://lonava.com/newchan">Create Channel</a></li>{% end %}
+                    <li><a href="http://lonava.com/new">Newest</a></li>
+				</ul>
+			</div><!-- #head_nav -->
+
+		</div><!-- #head_right -->
+
+		<div class="clear"></div>
+	</div><!-- #header -->
+
+</div><!-- #header_bg -->
+<div id="main_content" class="container_16">
+    <ul class="grid_11"> <!-- I hate this too, sorry. It's stupid, but makes the columns on the right work -->

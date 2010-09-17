@@ -1,0 +1,65 @@
+<br><br>
+<ul class="grid_11">
+    <li>
+    <div class="clear"></div>
+    <div class="single_wrap">
+        <div class="padder">
+
+
+{% if uid == "0" %}
+Please Login or Register in order to customize your channels. <br> The Default channels are shown below.
+{% else %}
+<p>
+Your Lonava news is made up of Channels, each of which represents either one Topic, such as "Pictures", or a website, such as "Hacker News". <br>
+You will receive all of the news that is posted to any of the channels you Subscribe to. For instance, all the pictures that users post to the "Pictures" channel, as well as every post that is pulled in from "Hacker News".</p><p>
+The Channels you receive are Bolded below. To add a channel, just click on it's name.<br>
+To remove a Channel from your account, just click on it, and it will un-bold. <br>
+When you are finished with your selections, press the "Modify my Channels" button at the bottom of the page.<br>
+{% end %}
+<p><p><p>
+<table>
+<!-- Using a table here to force it to stay small -->
+<tr><td>
+<div id="chans">
+{{ retrHTMLDivs(uid) }}
+</div>
+</td></tr>
+</table>
+
+
+<form action='/subscribe' method='post'>
+  {{ xsrf_form_html() }}
+        <input id='chanlist' name='chanlist' type=hidden value='["1"]' >
+        <input type=submit value="Modify my Channels">
+</form>
+
+</div>
+</div>
+</li>
+</ul>
+<script>
+chanlist = new Array();
+initialclick= $('.clicked')
+initialclick.each( function (i) { chanlist.push($(this).attr('channelnum'));} );
+
+$("div.channel").live('click',function(event)
+{
+//$(this).css('background-color',"#4a525a");
+$(this).addClass("clicked");
+var myid = $(this).attr('channelnum');
+
+
+//Remove the entry if it's already in the list.
+if (jQuery.inArray(myid,chanlist) > -1)	
+	{
+	chanlist = $.grep(chanlist, function(val) { return val != myid; });
+	$(this).removeClass("clicked");
+	}
+else // Otherwise, Add it to the Array
+	{
+	chanlist.push($(this).attr('channelnum'));
+	}
+$('input[id="chanlist"]').val(JSON.stringify(chanlist));
+
+});
+</script>

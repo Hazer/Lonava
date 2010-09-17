@@ -1,0 +1,22 @@
+<ul class="grid_11">
+    <li>
+    <div class="clear"></div>
+    <div class="single_wrap">
+        <div class="padder">
+<br><br>
+<form action='/editreply/{{replyid}}' method='post'>
+  {{ xsrf_form_html() }}
+
+<textarea name='text' rows=6 cols=60>{{defaulttext}}</textarea><br>
+<input type='hidden' name='parent' value='{{parent}}'>
+<input type='hidden' name='storyid' value='{{storyid}}'>
+<input type='hidden' name='commentgroup' value='{{commentgroup}}'>
+<input type='submit' value='Edit Comment'>
+</form>
+{% if uid == "0" %}
+<br><br><small>Comments can be left by <a href='http://lonava.com/register'>registered users</a>.</small><br><br>
+{% end %}
+</div>
+</div>
+</li>
+</ul>

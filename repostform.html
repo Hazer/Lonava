@@ -1,0 +1,83 @@
+<ul class="grid_11">
+    <li>
+    <div class="clear"></div>
+    <div class="single_wrap">
+        <div class="padder">
+
+
+<form action="/repost/{{storyid}}" method="post"> 
+<input type="submit" value="Repost"> 
+  {{ xsrf_form_html() }}
+
+        <input type=hidden id='chanlist' name='chanlist' >
+
+</form>
+
+
+<table>
+    <!-- Using a table here to force it to stay small -->
+    <tr><td>
+            <div id="chans">
+            </div>
+    </td></tr>
+</table>
+
+
+
+<script>
+$.getJSON("http://Lonava.com/getmychannels",
+        function(data){
+          $.each(data, function(i,product){
+	    var divclass = "channel";
+	    if (product[3] == true)
+		{
+           	content = "<div class='" + divclass + "' channelnum='" + product[1] + "'>" +  product[2] + "     (" + product[0] + " subscribers) </div>";
+            	content += '<br/>';
+            	$(content).appendTo("#chans");
+		}
+          });
+        });
+chanlist = new Array();
+</script>
+
+
+<script>
+$("div.channel").live('click',function(event)
+{
+//$(this).css('background-color',"#4a525a");
+$(this).addClass("clicked");
+var myid = $(this).attr('channelnum');
+
+
+//Remove the entry if it's already in the list.
+if (jQuery.inArray(myid,chanlist) > -1)	
+	{
+	chanlist = $.grep(chanlist, function(val) { return val != myid; });
+	$(this).removeClass("clicked");
+	}
+else // Otherwise, Add it to the Array
+	{
+	chanlist.push($(this).attr('channelnum'))
+	}
+$('input[id="chanlist"]').val(JSON.stringify(chanlist));
+if (chanlist.length < 1)
+	{
+	// Must be in a least one chan
+	$("input[type=submit]").hide();
+	bkphtml = $("#subtd").html();
+	$("#subtd").html("Submissions must be in at least one channel");
+	}
+else
+        {
+        // Must be in a least one chan
+        $("#subtd").html(bkphtml);
+        $("input[type=submit]").show();
+        }
+
+});
+</script>
+
+</div>
+</div>
+</li>
+</ul>

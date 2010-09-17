@@ -1,0 +1,17 @@
+				<li>
+					<div class="voting grid_2">
+						<div class="storyvote" storyid='{{storyid}}' val='1' ><img src="/static/images/vote_up.png" alt="Vote Article Up" /></div>
+                        <div class="score"  storyid='{{storyid}}'>{{score}}</div>
+						<div class="storyvote" storyid='{{storyid}}' val='-1'><img src="/static/images/vote_down.png" alt="Vote Article Down" /></div>
+					</div><!-- .voting -->
+					<div class="entry story grid_8">
+                        <p class="title"><a href="{{url}}" rel='nofollow'>{{title}}</p><p><span class="itemsource">({{urlstr}})</span></a><p>
+						<p class="meta">
+                        <div class="comments"><a href="http://lonava.com/stories/{{storyid}}">{% if cachedreplycount > 0 %}{{cachedreplycount}} {% if cachedreplycount == 1 %}comment{% end %}{% if cachedreplycount != 1 %}comments{%end%}{%end%}{% if cachedreplycount < 1 %}no comments{%end%}</a></div>
+                        <div class="meta_item posted">Posted: <acronym title='{{storytime}}'>{{timeago}}</acronym></div><div class="meta_item">By: <a href="http:///lonava.com/user/{{userid}}">{% if long(userid) == long(viewer) %} <b>You</b> {%end%}  {% if long(userid) != long(viewer) %} {{name}} {% end %}</a></div>
+                        <br> <div class="clear"></div>
+							<div class="meta_item">In: <a href="http://lonava.com/channel/{{location}}">{{channame}}</a></div>
+						</p>
+					</div><!-- .entry -->
+					<div class="clear"></div>
+				</li>

@@ -1,0 +1,50 @@
+<ul class="grid_11">
+    <li>
+    <div class="clear"></div>
+    <div class="single_wrap">
+        <div class="padder">
+            
+There are two types of Channels that you can create. <br>
+The first is a discussion channel, where you can news and discussions about the channels's topic.<br>
+<p>
+Examples include <a href="http://lonava.com/channel/4">Technology News</a> or <a href="http://lonava.com/channel/6">Tabletop gaming</a>. 
+<br>
+Anyone can subscribe and post to this channel after it's created.
+
+Please think before create a new Channel. Is this something that other people are going to be interested in?<br>
+Is there already another channel covering this topic?<br>
+
+{% if long(ustatus) > 0 %}
+<form action="/newchan" method="post">
+    {{ xsrf_form_html() }}
+    <br>
+    <input type="text" cols=50 name="channame">
+    <br>
+    <input type="submit" value="Create Discussion Channel">
+</form>
+
+<br>
+Alternatively, you can create a Channel from an RSS feed, such as http://daringfireball.net/index.xml 
+<br> After create a Channel from a feed, every article posted to the feed will be added automatically to Lonava.
+<br>
+<form action="/newchan" method="post"> 
+  {{ xsrf_form_html() }}
+<br>
+<input type="text" cols="100" name="newurl"> 
+<Br>
+<input type="submit" value="Create Channel from RSS Feed"> 
+
+{% end %}
+
+{% if long(uid) == 0 %}
+<p> Only users who have <a href="/register">registered</a> and verified their identity can create channels</p>
+{%end%}
+
+{% if long(ustatus) < 1 and long(uid) > 0 %}
+<p>You can create a channel as soon as you <a href="https://lonava.com/verify/{{uid}}">Verify your account</a>, so we know you're a real person</p>
+{%end%}
+
+</div>
+</div>
+</li>
+</ul>

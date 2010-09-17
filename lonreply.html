@@ -1,0 +1,44 @@
+
+<div class="voting grid_2">
+	<div class="replyvote" replyid='{{replyid}}' val='1' ><img src="/static/images/vote_up.png" alt="vote comment up" /></div>
+    <div class="score"  replyid='{{replyid}}'>{{score}}</div>
+	<div class="replyvote" replyid='{{replyid}}' val='-1'><img src="/static/images/vote_down.png" alt="vote comment down" /></div>
+</div><!-- .voting -->
+
+<div class="longform entry grid_8">
+	<p class="meta">
+		<div class="meta_item posted">Posted: <acronym title='{{replytime}}'>{{timeago}}</acronym></div><div class="meta_item">By: <a href="http:///lonava.com/user/{{usr}}">{% if long(usr) == long(viewer) %} <b>You</b> {%end%}  {% if long(usr) != long(viewer) %} {{name}} {% end %}</a></div>
+		<p><br>
+	    {{text}}
+		</p>
+	</p>
+	{% if lastedit != replytime %}
+		<p>
+		<b>Edited: <acronym title='{{lastedit}}'>{{editago}}</acronym></b>
+		</p>
+	{% end %}
+	<p>
+	{%if imgurl is not None %}
+	    <div class="commentpicture">
+	        <a href='{{imgurl}}'>
+	            {% if pimgurl is not None %}
+	            <img src='{{pimgurl}}'>
+	            {% end %}
+	            {% if pimgurl is None %}
+	            <img src='{{imgurl}}'>
+	            {%end%}
+	        </a>
+	    </div>
+    {%end%}
+    {% if (long(viewer) != 0) and (long(ustatus) > 0) %}
+        <a class ='reply' href="/reply/{{replyid}}">reply</a>
+    {%end%}
+    {% if long(viewer) == long(usr) %}
+        | <a class='reply' href="/editreply/{{replyid}}">edit</a>
+    {% end %}
+    {% if (long(viewer) == 0) or (long(ustatus) < 1) %}
+        <a class='reply' href="#">reply</a>
+    {% end %}
+    </p>
+</div><!-- .entry -->
+<div class="clear"></div> 

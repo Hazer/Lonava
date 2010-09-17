@@ -1,0 +1,113 @@
+<ul class="grid_11">
+    <li>
+    <div class="clear"></div>
+    <div class="single_wrap">
+        <div class="padder">
+
+            
+<br><br>
+
+<form enctype="multipart/form-data" action="/poststory" method="post">
+  {{ xsrf_form_html() }}
+
+<table border=0>
+	<tr>
+	<td>
+		Title <br> (required)
+	</td>
+	<td>
+		<input type=text name="title" value="" size=50>
+	</td>
+	</tr>
+	<tr>
+	<td>
+		Text <br> (optional)
+	</td>
+	<td>
+                <textarea name="text" rows=8 cols=80></textarea>
+        </td>
+        </tr>
+
+	<tr>
+	<td>
+		URL <br> (optional)
+	<br>
+	</td>
+	<td>
+		<input type=text name="url" value='' size=50>
+	</td>
+	<tr>
+	<td>
+		Image <br> (optional)
+	</td>
+	<td>
+		<input type="file" name="image">
+	</td>
+	</tr>
+	<tr>
+	<td>
+                <input id='chanlist' name='chanlist' type=hidden value='[]' >
+	</td>
+	<td id = 'subtd'>
+		<input type=submit value="submit">
+	</td></tr>
+        </table>
+</form>
+
+
+Please choose up to 5 channels to Submit this story to:<p>
+
+<table>
+<!-- Using a table here to force it to stay small -->
+<tr><td>
+<div id="chans">
+{{ retrHTMLDivs(clist) }}
+</div>
+</td></tr>
+</table>
+
+</div>
+</div>
+</li>
+</ul>
+
+
+<script>
+chanlist = new Array();
+
+$("div.channel").live('click',function(event)
+{
+//$(this).css('background-color',"#4a525a");
+$(this).addClass("clicked");
+var myid = $(this).attr('channelnum');
+
+
+//Remove the entry if it's already in the list.
+if (jQuery.inArray(myid,chanlist) > -1)	
+	{
+	chanlist = $.grep(chanlist, function(val) { return val != myid; });
+	$(this).removeClass("clicked");
+	}
+else // Otherwise, Add it to the Array
+	{
+	chanlist.push($(this).attr('channelnum'))
+	}
+$('input[id="chanlist"]').val(JSON.stringify(chanlist));
+if (chanlist.length < 1)
+	{
+	// Must be in a least one chan
+	$("input[type=submit]").hide();
+	bkphtml = $("#subtd").html();
+	$("#subtd").html("Submissions must be in at least one channel");
+	}
+else
+        {
+        // Must be in a least one chan
+        $("#subtd").html(bkphtml);
+        $("input[type=submit]").show();
+        }
+
+});
+</script>
+
+

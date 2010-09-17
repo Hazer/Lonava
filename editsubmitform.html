@@ -1,0 +1,50 @@
+<ul class="grid_11">
+    <li>
+    <div class="clear"></div>
+    <div class="single_wrap">
+        <div class="padder">
+
+<br><br>
+<form enctype="multipart/form-data" action="/editstory/{{edit}}" method="post">
+  {{ xsrf_form_html() }}
+
+<table border=0>
+	<tr>
+	<td>
+		Title <br> (required)
+	</td>
+	<td>
+		<input type=text name="title" value="{{defaulttitle}}" size=50>
+	</td>
+	</tr>
+	<tr>
+	<td>
+		Text <br> (optional)
+	</td>
+	<td>
+                <textarea name="text" rows=4 cols=50>{{defaulttext}}</textarea>
+        </td>
+        </tr>
+
+	<tr>
+	<td>
+		URL <br> (optional)
+	<br>
+	</td>
+	<td>
+		{% if defaulturl is not None %}
+		<input type=text name="url" value='{{defaulturl}}' size=50>
+		{% end %}
+		{% if defaulturl is None %}
+		<input type=text name="url" size=50>
+		{% end %}
+	<td id = 'subtd'>
+		<input type=submit value="Edit Original Post">
+	</td></tr>
+        </table>
+</form>
+
+</div>
+</div>
+</li>
+</ul>

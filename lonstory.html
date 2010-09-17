@@ -1,0 +1,47 @@
+<ul class="grid_11">
+				<li>
+					<div class="voting grid_2">
+						<div class="storyvote" storyid='{{storyid}}' val='1' ><img src="/static/images/vote_up.png" alt="Vote Article Up" /></div>
+                        <div class="score"  storyid='{{storyid}}'>{{score}}</div>
+						<div class="storyvote" storyid='{{storyid}}' val='-1'><img src="/static/images/vote_down.png" alt="Vote Article Down" /></div>
+					</div><!-- .voting -->
+					<div class="entry grid_8 story">
+                        <p class="title"><a href="{{url}}" rel='nofollow'>{{title}}</p><p><span class="itemsource">({{urlstr}})</span></a><p>
+						<p class="meta">
+                        <div class="comments"><a href="http://lonava.com/stories/{{storyid}}">{% if cachedreplycount > 0 %}{{cachedreplycount}} {% if cachedreplycount == 1 %}comment{% end %}{% if cachedreplycount != 1 %}comments{%end%}{%end%}{% if cachedreplycount < 1 %}no comments{%end%}</a></div>
+                        <div class="meta_item posted">Posted: <acronym title='{{storytime}}'>{{timeago}}</acronym></div><div class="meta_item">By: <a href="http:///lonava.com/user/{{userid}}">{% if long(userid) == long(viewer) %} <b>You</b> {%end%}  {% if long(userid) != long(viewer) %} {{name}} {% end %}</a></div>
+                        <br> <div class="clear"></div>
+							<div class="meta_item">In: <a href="http://lonava.com/channel/{{location}}">{{channame}}</a></div>
+						</p>
+                        <p>
+					{% if long(viewer) != 0 %}
+						 <span class="meta_item"><a href="/save/{{storyid}}">save </a></span>
+						  {% if long(userid)  == long(viewer) %}
+						  <span class="meta_item"><a href="/editstory/{{storyid}}">edit</a></span>
+						  {%end%}
+						  {% if long(ustatus) > 0 %}
+						  <span class="meta_item"><a href="/repost/{{storyid}}">repost to another channel</a></span>
+						  {% end %}
+                		{% end %}
+                		</p>
+					</div><!-- .entry -->
+					<div class="clear"></div>
+				</li>
+				{% if len(text) > 2 or imgurl is not None %}
+				<div class="single_wrap longform">
+					<div class="padder">
+						<p>{{text}}</p>
+						{% if pimgurl is not None %}
+						<a href='{{imgurl}}'><img border=0 src = '{{pimgurl}}'></a>
+						{% end %}
+						{% if lastedit != storytime %}
+						<b>Edited: <acronym title='{{lastedit}}'>{{editago}}</acronym></b>
+						{% end %}
+					</div>
+
+				</div><!-- .single_wrap -->
+				{%end%}
+
+
+        </li>
+</ul>

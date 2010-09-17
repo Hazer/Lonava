@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>img{ height: 100px; float: left; }</style>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+</head>
+<body>
+	<div id="product_list">
+	</div>
+<script>
+$.getJSON("http://Lonava.com/getmychannels",
+        function(data){
+          $.each(data, function(i,product){
+            content = '<div class=Channel id=' + product[1] + '>' +  product[2] + "     (" + product[0] + " subscribers) </div>";
+            content += '<br/>';
+            $(content).appendTo("#product_list");
+          });
+        });
+</script>
+</body>
+</html>

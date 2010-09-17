@@ -1,0 +1,38 @@
+#!/bin/bash
+if [ $1 == 'start' ]
+	then
+	echo "Stopping"
+	/etc/init.d/lonava stop
+	echo "Starting..."
+	cp /usr/local/nginx/conf/tornados.prod /usr/local/nginx/conf/tornados.conf
+	nohup /usr/local/lonava/lonava.py --port=81 >> /var/log/lonava/lonava.log & 2>&1
+	nohup /usr/local/lonava/lonava.py --port=82 >> /var/log/lonava/lonava.log & 2>&1
+	nohup /usr/local/lonava/lonava.py --port=83 >> /var/log/lonava/lonava.log & 2>&1
+	nohup /usr/local/lonava/lonava.py --port=84 >> /var/log/lonava/lonava.log & 2>&1
+	nohup /usr/local/lonava/lonava-ssl.py --port=400 >> /var/log/lonava/lonava-ssl.log & 2>&1
+	/usr/local/nginx/sbin/nginx 
+		
+fi
+if [ $1 == 'stop' ]
+        then
+                echo "Stoping"
+		killall python
+		killall nginx
+fi
+if [ $1 == 'restart' ]
+        then
+		/etc/init.d/lonava stop
+		/etc/init.d/lonava start
+
+fi
+if [ $1 == 'debug' ]
+        then
+		killall nginx	
+		killall python
+		cp /usr/local/nginx/conf/tornados.dev /usr/local/nginx/conf/tornados.conf
+        nohup /usr/local/lonava/lonava-ssl.py --port=400 >> /var/log/lonava/lonava.log & 2>&1
+
+		/usr/local/nginx/sbin/nginx
+		/usr/local/lonava/lonava.py --port=81
+fi
+

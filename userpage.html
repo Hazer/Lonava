@@ -1,0 +1,94 @@
+{% if isme == True %}
+<ul class="grid_11">
+    <li>
+    <div class="clear"></div>
+    <div class="single_wrap">
+        <div class="padder">
+
+This is your user page. On this page are some of the statistics about your account<br>
+
+<p><p>
+<a class='ul' href='http://lonava.com/mymsg'>View Messages that have been sent to you</a>.
+<p>
+<a class='ul' href='http://lonava.com/getusrsaved'>View your Saved Stories</a>.
+<p><p>
+
+{% if long(ustatus) < 1 %}
+Your account has not yet been verified. <br>
+Until you verify your account, you will not be able to post comments or submit stories.<br>
+<a href="http://Lonava.com/verify/{{client_user}}">Verify your Account</a>.
+<p><p>
+
+{% end %}
+
+</div>
+</div>
+</li>
+</ul>
+
+{% end %}
+
+<ul class="grid_11">
+    <li>
+    <div class="clear"></div>
+    <div class="single_wrap">
+        <div class="padder">
+
+Name: {{name}}
+<br>
+{% if pimgurl is not None %}
+<a href='{{imgurl}}'><img border=0 src = '{{pimgurl}}'></a>
+{% end %}
+
+<br><br>
+Registered: <acronym title='{{regtime}}'>  {{timeago}}</acronym>
+<br><br>
+Story Karma: {{storykarma}}
+<br><br>
+Comment Karma: {{commentkarma}}
+<br><br>
+{% if isme == False %}
+{{aboutme}}
+<br><br>
+{%end%}
+
+{% if url is not None %}
+URL: {{url}}
+<br><br>
+</tr></td>
+{% end %}
+{% if hometown is not None %}
+Hometown: {{hometown}}
+<br><br>
+{% end %}
+{% if state is not None %}
+State: {{state}}
+<br><br>
+{% end %}
+{% if zipcode is not None %}
+Zip: {{zipcode}}
+<br><br>
+{% end %}
+</div>
+</div>
+</li>
+</ul>
+
+<ul class="grid_11">
+    <li>
+    <div class="clear"></div>
+    <div class="single_wrap">
+        <div class="padder">
+<a class='ul' href="/getusrposts/{{client_user}}">Show all of {{name}}'s Posts</a>.
+<p>
+<a class='ul' href="/getusrcomments/{{client_user}}">Show all of {{name}}'s Comments</a>.
+
+{% if isme != True %}
+<p><p>
+<a class='ul' href="/msg/{{client_user}}">Send {{name}} a message</a>.
+{% end %}
+
+</div>
+</div>
+</li>
+</ul>

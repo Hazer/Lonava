@@ -1,0 +1,52 @@
+</ul>
+<div id="sidebar" class="grid_5"> 
+    <div id="buttons"> 
+        <a id="submit_button" class="button verified"
+            {% if long(ustatus) > 0 %}href="http://lonava.com/submit" {% end%}
+            {%if long(ustatus) < 1 %}href="#"{%end %}>Submit a Story</a> 
+        <a id="channel_button" class="button registered"
+            {% if long(uid) > 0 %} href="http://lonava.com/subscribe" {%end%}
+            {% if long(uid) < 1 %} href="#" {%end%}>Customize News</a> 
+    <div class="clear"></div> 
+    </div> 
+    {% if long(uid) < 1 %}
+        {% include 'footer-login.html' %}
+    {% else %}
+        {% if long(ustatus) < 1 %}
+            {% include 'footer-verify.html' %}
+        {% end %}
+    {% end %}
+    <div class="sidebox"> 
+        {% if long(uid) < 1 %}
+        <h3>Most Popular Channels</h3> 
+        {% end %}
+        {% if long(uid) > 0 %}
+        <h3>Your Top Channels</h3>
+        {% end %}
+
+        <ul> 
+            {{topchans}}
+        </ul> 
+    </div><!-- #sidebox -->             
+    <div class="sidebox">
+    <form action="/s" method="post"> 
+          {{ xsrf_form_html() }}
+        <input type="text" name="search" width="100%">
+        <input type="submit" class="submitbutton" value="Search">
+    </form>
+</div>                                                                                                                                                                                                                                                                                                                                                                                
+</div> <!-- Main content-->
+<div class="clear"></div>
+    <div id="footer" class="container_12">
+
+	<p>Use of this site constitutes acceptance of our <a href="http://lonava.com/stories/11">User Agreement</a>. Copyright &copy; 2010 - Lonava.com </p>
+
+	</div><!-- #footer -->
+
+</div><!-- #page_wrap -->
+
+
+</body>
+
+</html>
+
