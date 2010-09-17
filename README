@@ -7,3 +7,7 @@ For production, use the provided init script to run it on 81 82 83 84 and have n
 You'll want to create the SQL database as noted in the code.
 Description page - http://e1ven.com/2010/09/17/lonava-2/
 GitHub page - http://github.com/e1ven/Lonava
+
+Postgres schema is stored in schema.sql
+nginx files in the nginx directory
+
