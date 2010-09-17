@@ -11,3 +11,7 @@ GitHub page - http://github.com/e1ven/Lonava
 Postgres schema is stored in schema.sql
 nginx files in the nginx directory
 
+
+The Lonava code is Licensed under the Apache License, Version 2.0.
+The Lonava logo and mascot are not offered under license. I want to keep them. ;)
+-CPD
