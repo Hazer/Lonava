@@ -145,7 +145,7 @@ class LonFeed(object):
         self.feedname = " ";    
 
     def FromFeedID(self,feedid):
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute ("select * from feeds where feedid = %s;",[feedid])
         row = cur.fetchone()
@@ -154,7 +154,7 @@ class LonFeed(object):
         db.close()
 
     def FromDBRow(self,row):
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
                         
         self.freq = row['freq']
@@ -207,7 +207,7 @@ class LonReply(object):
         self.name = ""
 
     def FromReplyID(self,replyid):
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'") 
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'") 
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute ("select * from replies where replyid = %s;", [replyid])
         row = cur.fetchone()
@@ -228,7 +228,7 @@ class LonReply(object):
         self.pimgurl = row['pimgurl']
 
     def GetReplyIDs(self):
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute ("select *,score - (select count(*) from replies where commentgroup = %s and parent = %s and replyid > r.replyid) as rank from replies as r where commentgroup = %s and parent = %s order by rank desc;", [self.commentgroup,self.replyid,self.commentgroup,self.replyid])
 
@@ -240,7 +240,7 @@ class LonReply(object):
 
 
     def GetReplyRows(self):
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute ("select *,score - (select count(*) from replies where commentgroup = %s and parent = %s and replyid > r.replyid) as rank from replies as r where commentgroup = %s and parent = %s order by rank desc;", [self.commentgroup,self.replyid,self.commentgroup,self.replyid])
         self.replies = []
@@ -288,7 +288,7 @@ class LonMsg(object):
         self.msgid = -1
 
     def FromReplyID(self,msgid):
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute ("select * from msgs where msgid = %s;", [msgid])
         row = cur.fetchone()
@@ -304,7 +304,7 @@ class LonMsg(object):
         self.msgid = row['msgid']
 
     def GetHTML(self,caller):
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute ("select name from usrs where usrid = %s;", [self.sendid])
         send_name = cur.fetchone()['name']
@@ -335,7 +335,7 @@ class LonStory(tornado.web.UIModule):
         self.location = -1
 
     def FromStoryID(self,storyid):
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute ("select * from storygroup where storyid = %s;", [storyid])
         row = cur.fetchone()
@@ -374,7 +374,7 @@ class LonStory(tornado.web.UIModule):
 
 
     def GetReplyIDs(self):
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute ("select *,score - (select count(*) from replies where commentgroup = %s and parent = 0 and replyid > r.replyid) as rank from replies as r where commentgroup = %s and parent = 0 order by rank desc;", [self.commentgroup,self.commentgroup])
 
@@ -388,7 +388,7 @@ class LonStory(tornado.web.UIModule):
 
 
     def GetReplyRows(self):
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute ("select *,score - (select count(*) from replies where commentgroup = %s and parent = 0 and replyid > r.replyid) as rank from replies as r where commentgroup = %s and parent = 0 order by rank desc;", [self.commentgroup,self.commentgroup])
 
@@ -449,7 +449,7 @@ class PageHandler(BaseHandler):
     def get(self,page = 1):
         self.getvars()
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         client_usrid = tornado.escape.xhtml_escape(self.uid)
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -490,7 +490,7 @@ class NewHandler(BaseHandler):
     def get(self,page = 1):
         self.getvars()
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         client_usrid = tornado.escape.xhtml_escape(self.uid)
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -543,7 +543,7 @@ class UserPostsHandler(BaseHandler):
     def get(self,client_userid):
         self.getvars()
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         client_usrid = tornado.escape.xhtml_escape(self.uid)
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -570,7 +570,7 @@ class ChanPostsHandler(BaseHandler):
         def get(self,client_chanid,page = 1):
             self.getvars()
 
-            db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+            db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
             cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
             client_usrid = tornado.escape.xhtml_escape(self.uid)
             cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -619,7 +619,7 @@ class NewChanHandler(BaseHandler):
     def get(self):
         self.getvars() 
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
  
@@ -641,7 +641,7 @@ class NewChanHandler(BaseHandler):
         if (self.ustatus < 1):
             return -1
         
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         try:
             client_channame =  unicode(tornado.escape.xhtml_escape(self.get_argument("channame")),'utf8')  
@@ -699,7 +699,7 @@ class MyMsgHandler(BaseHandler):
         if (self.getvars() == 0):
             return -1
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
  
@@ -728,7 +728,7 @@ class UserCommentsHandler(BaseHandler):
     def get(self,client_userid):
         self.getvars()
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         client_usrid = tornado.escape.xhtml_escape(self.uid)
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -756,7 +756,7 @@ class StoryHandler(BaseHandler):
         print "uid = " + self.uid
         story = LonStory()
         story.FromStoryID(story_id)
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -854,7 +854,7 @@ class StoryHandler(BaseHandler):
             self.write("Technical error. Missing parent or usrid.")
             return -1
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute("select commentgroup from stories where storyid = %s",[storyid]);
         commentgroup = cur.fetchone()['commentgroup']
@@ -883,7 +883,7 @@ class VoteStoryHandler(BaseHandler):
         
     
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cur.execute("delete from storyvotes where story = %s and usr = %s",[client_story,self.uid])
@@ -929,7 +929,7 @@ class VoteReplyHandler(BaseHandler):
             return -1
         print value
         print client_voteval
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cur.execute("delete from replyvotes where reply = %s and usr = %s",[client_reply,self.uid])
@@ -959,7 +959,7 @@ class VoteReplyHandler(BaseHandler):
 class RepostHandler(BaseHandler):
     def get(self,storyid):
         self.getvars()
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         client_usrid = tornado.escape.xhtml_escape(self.uid)
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -993,7 +993,7 @@ class RepostHandler(BaseHandler):
             self.write("Sorry. You must post to at least 1 channel.")
             return -1
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute("select subbedchan from usrsubs where usr = %s",[str(self.uid)])
         allowedchans = cur.fetchall()
@@ -1028,7 +1028,7 @@ class EditStoryHandler(BaseHandler):
 
     def get(self,storyid):
         self.getvars()
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -1066,7 +1066,7 @@ class EditStoryHandler(BaseHandler):
         except:
             client_url =  None
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cur.execute ("select usr from stories where storyid = %s;",[storyid])
@@ -1102,7 +1102,7 @@ class SubmitHandler(BaseHandler):
             self.write("I'm sorry, only Verified users may post replies. You may Verify your account at <a href='https://lonava.com/verify/'" + self.uid + "'>the verification page</a>.")
             return -1
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -1199,7 +1199,7 @@ class SubmitHandler(BaseHandler):
             self.write("Sorry. You must post to at least 1 channel.")
             return -1
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
        
         #Let's make sure you're allowed to post to this chan
@@ -1241,7 +1241,8 @@ class SubmitHandler(BaseHandler):
 
         api = ApiClient('http://:rXVEdV8N2clyZ4@8hdj3.api.indextank.com')
         index = api.get_index('Pages')
-        index.add_document(str(storyid), { 'text': str(client_text), 'title': str(client_title), 'author': str(self.name), 'link': str(client_url) })
+	##Kill Indextank. Not used for more people
+        ##index.add_document(str(storyid), { 'text': str(client_text), 'title': str(client_title), 'author': str(self.name), 'link': str(client_url) })
 
         db.commit()
         self.redirect("/stories/" + str(storyid))
@@ -1251,7 +1252,7 @@ class SubmitHandler(BaseHandler):
 class MsgHandler(BaseHandler):
     def get(self,client_recip):
         self.getvars()
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -1261,7 +1262,7 @@ class MsgHandler(BaseHandler):
 
         self.write(self.render_string('header.html',newmail=newmail,title='Send Lonava Message',uid=self.uid,user=self.name,ustatus=self.ustatus))
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute("select name from usrs where usrid = %s",[client_recip])
         recip_name=cur.fetchone()['name']
@@ -1285,7 +1286,7 @@ class MsgHandler(BaseHandler):
         except:
             client_text = ' ' #I'm using a space, rather than None, so we don't need to error-check for null
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cur.execute('insert into msgs (sendid,recvid,title,text) values (%s,%s,%s,%s)',[self.uid,client_recv,client_title,client_text])
@@ -1300,7 +1301,7 @@ class UserHandler(BaseHandler):
     def get(self,client_user):
         self.getvars()
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute("select * from usrs where usrid = %s",[client_user])
         userrow = cur.fetchone()
@@ -1351,7 +1352,7 @@ class UserHandler(BaseHandler):
         except:
             client_text = " "
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         if (str(userid) != str(self.uid)):
@@ -1410,7 +1411,7 @@ class UserHandler(BaseHandler):
 class SubscribeHandler(BaseHandler):
     def retrHTMLDivs(self,usrid):
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
 
@@ -1457,7 +1458,7 @@ class SubscribeHandler(BaseHandler):
         if (self.getvars() == 0):
             return -1
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -1479,7 +1480,7 @@ class SubscribeHandler(BaseHandler):
         client_chanlist= self.get_argument("chanlist")
         chanlist = tornado.escape.json_decode(client_chanlist)
         print chanlist
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute("delete from usrsubs where usr = %s",[self.uid])    
         for i in range(len(chanlist)):
@@ -1495,7 +1496,7 @@ class SearchHandler(BaseHandler):
     def get(self, client_search = ""):
         self.getvars()
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
 
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -1541,7 +1542,7 @@ class SHandler(BaseHandler):
 class NotFoundHandler(BaseHandler):
     def get(self,foo):
         self.getvars()
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         client_usrid = tornado.escape.xhtml_escape(self.uid)
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -1559,7 +1560,7 @@ class SaveHandler(BaseHandler):
         if (self.getvars() == 0):
             return -1
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute("insert into savedstories (usr,savedstory) values (%s,%s)",[self.uid,storyid])
         db.commit()
@@ -1570,7 +1571,7 @@ class UserSavedHandler(BaseHandler):
    def get(self):
         self.getvars()
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         client_usrid = tornado.escape.xhtml_escape(self.uid)
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -1595,7 +1596,7 @@ class ReplyHandler(BaseHandler):
     def get(self, reply_id):
         self.getvars()
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
 
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -1607,7 +1608,7 @@ class ReplyHandler(BaseHandler):
         reply = LonReply()
         reply.FromReplyID(reply_id)
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute("select * from stories where commentgroup = %s;",[reply.commentgroup])
         storyid = cur.fetchone()['storyid'] 
@@ -1625,7 +1626,7 @@ class EditReplyHandler(BaseHandler):
     def get(self, reply_id):
         self.getvars()
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
 
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -1637,7 +1638,7 @@ class EditReplyHandler(BaseHandler):
         reply = LonReply()
         reply.FromReplyID(reply_id)
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute("select * from stories where commentgroup = %s;",[reply.commentgroup])
         storyid = cur.fetchone()['storyid']
@@ -1660,7 +1661,7 @@ class EditReplyHandler(BaseHandler):
             self.write("You cannot edit a post to be empty.")
             return -1
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
         cur.execute ("select usr from replies where replyid = %s;",[replyid])
@@ -1688,7 +1689,7 @@ class LoginHandler(BaseHandler):
         self.getvars()
         client_email =  unicode(tornado.escape.xhtml_escape(self.get_argument("email")),'utf8')
         client_pass =  unicode(tornado.escape.xhtml_escape(self.get_argument("pass")),'utf8')
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         cur.execute("select usrid,password from usrs where upper(email) = upper(%s);",[client_email])
         row = cur.fetchone()
@@ -1763,7 +1764,7 @@ class LogoutHandler(BaseHandler):
 
 class retrChans(object):
     def __init__(self,usrid,showAll):
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         if (usrid == -1 ):
             #Ret for all users
@@ -1816,7 +1817,7 @@ class RegisterHandler(BaseHandler):
             self.write("I'm sorry, your passwords don't match.") 
             return
 
-        db = psycopg2.connect("dbname='lonava' user='YOURUSER' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         #Make sure this email is unused
         cur.execute("select count(*) as count from usrs where upper(email) = upper(%s);",[client_newemail])

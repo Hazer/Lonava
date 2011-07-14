@@ -11,6 +11,7 @@ Lonava requires:
 	psycopg2
 	python-setuptools
 
+apt-get install postgresql
 easy_install ElementTree
 easy_install Markdown
 apt-get install python-httplib2
@@ -49,3 +50,19 @@ locate site.py
 pg_stat_statements
 http://it.toolbox.com/blogs/database-soup/pg_stat_statements-in-84-32648
 
+Now, add the schema-
+	psql
+	create database lonava;
+	create user YOURUSER with password 'YOURPASS';
+	grant all privileges on database lonava to YOURUSER;
+	Also note- Your user name will end up in lowercase, since you're not quoting it.
+
+	cat schema.sql |  psql -U youruser -W -d lonava
+
+	You'll also need to insert the guest user
+
+	lonava=# insert into usrs(usrid,name) values (0,'Guest');
+
+	After you create yourself an acct, make it registered.
+	lonava=# update usrs set status = 1 where email = 'you@email.org';
+	Log out and back in after doing this.	
