@@ -8,10 +8,10 @@
 					<div class="entry grid_8 story">
                         <p class="title"><a href="{{url}}" rel='nofollow'>{{title}}</p><p><span class="itemsource">({{urlstr}})</span></a><p>
 						<p class="meta">
-                        <div class="comments"><a href="http://lonava.com/stories/{{storyid}}">{% if cachedreplycount > 0 %}{{cachedreplycount}} {% if cachedreplycount == 1 %}comment{% end %}{% if cachedreplycount != 1 %}comments{%end%}{%end%}{% if cachedreplycount < 1 %}no comments{%end%}</a></div>
+                        <div class="comments"><a href="/stories/{{storyid}}">{% if cachedreplycount > 0 %}{{cachedreplycount}} {% if cachedreplycount == 1 %}comment{% end %}{% if cachedreplycount != 1 %}comments{%end%}{%end%}{% if cachedreplycount < 1 %}no comments{%end%}</a></div>
                         <div class="meta_item posted">Posted: <acronym title='{{storytime}}'>{{timeago}}</acronym></div><div class="meta_item">By: <a href="http:///lonava.com/user/{{userid}}">{% if long(userid) == long(viewer) %} <b>You</b> {%end%}  {% if long(userid) != long(viewer) %} {{name}} {% end %}</a></div>
                         <br> <div class="clear"></div>
-							<div class="meta_item">In: <a href="http://lonava.com/channel/{{location}}">{{channame}}</a></div>
+							<div class="meta_item">In: <a href="/channel/{{location}}">{{channame}}</a></div>
 						</p>
                         <p>
 					{% if long(viewer) != 0 %}
