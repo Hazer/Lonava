@@ -5,7 +5,7 @@ import psycopg2
 import psycopg2.extras
 import os
 
-db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
+db = psycopg2.connect("dbname='lonava' user='lonuser' host='localhost' password='YOURPASS'")
 cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
 print "Generating Count"
 cur.execute  ("select count(*) as count from (select distinct on (commentgroup) * from storygroup ) as bar")

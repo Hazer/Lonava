@@ -107,7 +107,7 @@ class VerifyHandler(BaseHandler):
     def get(self,client_user):
         self.getvars()
 
-        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='lonuser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         #        client_usrid = tornado.escape.xhtml_escape(self.uid)
         cur.execute ("select postsperpage,newmail from usrs where usrid = %s",[self.uid])
@@ -223,7 +223,7 @@ class VerifyHandler(BaseHandler):
                 salesuccess = payme.do_sale()
                 print salesuccess
                 if salesuccess == 1:
-                    db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
+                    db = psycopg2.connect("dbname='lonava' user='lonuser' host='localhost' password='YOURPASS'")
                     cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
                     cur.execute ("update usrs set name = %s,status = 1 where usrid = %s;", [cc_first_name + " " + cc_last_name,self.uid])
                     cur.execute ("select * from usrs where usrid = %s",[self.uid])
@@ -274,7 +274,7 @@ class ThanksHandler(BaseHandler):
 
 class retrChans(object):
     def __init__(self,usrid,showAll):
-        db = psycopg2.connect("dbname='lonava' user='youruser' host='localhost' password='YOURPASS'")
+        db = psycopg2.connect("dbname='lonava' user='lonuser' host='localhost' password='YOURPASS'")
         cur = db.cursor(cursor_factory=psycopg2.extras.DictCursor)
         if (usrid == -1 ):
             #Ret for all users

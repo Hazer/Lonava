@@ -17,38 +17,13 @@ easy_install Markdown
 apt-get install python-httplib2
 sudo apt-get install python-imaging
 
-nginx from source
-apt-get install build-essential libpcre++-dev libssl-dev
-http://www.grid.net.ru/nginx/download/nginx_upload_module-2.0.12.tar.gz
-
- ./configure --add-module=/root/Utils/nginx-source/nginx-0.8.46/nginx_upload_module-2.0.12/ --with-http_ssl_module 
-    make
-    make install
-
-for i in `seq 0 9`; do mkdir  -p /usr/local/lonava/uploads/$i; chmod 660 /usr/local/lonava/uploads/$i; done
-
-http://www.feedparser.org/
-apt-get install python-beautifulsoup
-http://intertwingly.net/stories/2004/08/04/urlnorm.py
-
-mkdir /var/log/lonava
-chmod a+w /var/log/lonava
-
-Add Hacker News fetcher to cron
-Add Sitemap maker to cron
-
-http://www.colourlovers.com/palette/30163/polar_ice_caps
-http://www.colourlovers.com/palette/299394/Sky_as_Ice
-
-
-OK, this is an ugly hack.
-locate site.py
-->
-    import sys
-    sys.setdefaultencoding('UTF-8')
-
-pg_stat_statements
-http://it.toolbox.com/blogs/database-soup/pg_stat_statements-in-84-32648
+Properly supporting UTF-8 is an ungly hack, and I'm embarrsed about it.
+Again, I'd do differently now (And have!)
+You can skip this step if you don't want to run for prod
+    locate site.py
+    ->
+        import sys
+        sys.setdefaultencoding('UTF-8')
 
 Now, add the schema-
 	psql
@@ -57,7 +32,7 @@ Now, add the schema-
 	grant all privileges on database lonava to YOURUSER;
 	Also note- Your user name will end up in lowercase, since you're not quoting it.
 
-	cat schema.sql |  psql -U youruser -W -d lonava
+	cat schema.sql |  PGPASSWORD="YOURPASS" psql -U youruser -d lonava
 
 	You'll also need to insert the guest user
 
@@ -66,3 +41,29 @@ Now, add the schema-
 	After you create yourself an acct, make it registered.
 	lonava=# update usrs set status = 1 where email = 'you@email.org';
 	Log out and back in after doing this.	
+
+At this point, you should be able to run it with ./lonava.py --port=8080
+
+If you want to use nginx to serve it (in prod, you should, you'll need to install it from source)
+    apt-get install build-essential libpcre++-dev libssl-dev
+    http://www.grid.net.ru/nginx/download/nginx_upload_module-2.0.12.tar.gz
+    ./configure --add-module=/root/Utils/nginx-source/nginx-0.8.46/nginx_upload_module-2.0.12/ --with-http_ssl_module 
+        make
+        make install
+
+    for i in `seq 0 9`; do mkdir  -p /usr/local/lonava/uploads/$i; chmod 660 /usr/local/lonava/uploads/$i; done
+
+    http://www.feedparser.org/
+    apt-get install python-beautifulsoup
+    http://intertwingly.net/stories/2004/08/04/urlnorm.py
+
+    mkdir /var/log/lonava
+    chmod a+w /var/log/lonava
+
+    Add Hacker News fetcher to cron
+    Add Sitemap maker to cron
+
+It also uses these color schemes-
+    http://www.colourlovers.com/palette/30163/polar_ice_caps
+    http://www.colourlovers.com/palette/299394/Sky_as_Ice
+

@@ -1,6 +1,10 @@
 *.pyc
 *.swp
+*.swo
 .DS_Store
-*.Pluric*Settings*
+*.Tavern*Settings*
 nohup.out
 __pycache__
+tmp
+*.min.js
+*.min.css
